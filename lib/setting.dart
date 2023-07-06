@@ -39,22 +39,17 @@ class _MainState extends State<Main> {
       body: Builder(builder: (context) {
         final double height = MediaQuery.of(context).size.height - 100;
         return CarouselSlider.builder(
-          itemCount: textList.length,
+          itemCount: 10,
           options: CarouselOptions(
-            enlargeCenterPage: true,
-            enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-            enlargeFactor: 0.4,
             autoPlayInterval: const Duration(seconds: 10),
             height: height,
             scrollDirection: Axis.vertical,
             autoPlay: true,
             // enlargeCenterPage: true,
           ),
-          itemBuilder: (context, index, realIdx) {
-            return Card(
-              text: textList[index],
-            );
-          },
+          itemBuilder: (context, index, realIdx) => Card(
+            text: textList[index],
+          ),
         );
       }),
     ));
@@ -70,16 +65,14 @@ class Card extends StatelessWidget {
     return Center(
       child: Container(
         margin: const EdgeInsets.all(50),
-        padding: const EdgeInsets.all(10),
-        // color: Colors.black,
+        height: 100,
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black38,
-              blurRadius: 1,
-              spreadRadius: 1,
+              color: Colors.grey,
+              blurRadius: 1.0,
+              // spreadRadius: 0.0,
             ),
           ],
         ),
