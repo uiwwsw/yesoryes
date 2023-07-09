@@ -33,7 +33,7 @@ class Stage extends PositionComponent with DragCallbacks {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    this.size = size - Vector2(100, 75);
+    this.size = size;
     if (this.size.x < 100 || this.size.y < 100) {
       this.size = size * 0.9;
     }

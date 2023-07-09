@@ -1,7 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart';
-
-import 'tapxa.dart';
+import 'package:flutter_application_1/tapxa.dart';
 
 void main() {
   final game = Tapxa();
