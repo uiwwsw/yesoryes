@@ -1,96 +1,73 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'package:flutter/widgets.dart';
 
-final List<String> textList = [
-  '입주를 환영한다는 의원의 현수막은 훗날 자기가 힘써서 인구가 늘었다는 정치적 활동으로 사용하려는 의도다.',
-  '오염수 방수에 대해 갑자기 시끄러운 이유는 실상 우리에게 피해가 가기 보단, 현 정권의 무능함을 드라마틱하게 보이기 위한 수단이다.',
-  '지금 눈앞에 일어나는 정치 이야기, 쉽게 속지 않도록 길잡이가 되주는 쉬운 정치 진짜 정치를 많이 이용해주세요.',
-];
+import 'tapxa.dart';
 
-void main() => runApp(const Main());
-
-class Main extends StatefulWidget {
-  const Main({super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _MainState();
-  }
+void main() {
+  final game = Tapxa();
+  runApp(GameWidget(game: game));
 }
 
-class _MainState extends State<Main> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // for (var imageUrl in images) {
-      //   precacheImage(NetworkImage(imageUrl), context);
-      // }
-    });
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('쉬운 정치, 진짜 정치'),
-      ), //오만가지를 다 골라주는 오다골
-      body: Builder(builder: (context) {
-        final double height = MediaQuery.of(context).size.height - 100;
-        return CarouselSlider.builder(
-          itemCount: textList.length,
-          options: CarouselOptions(
-            enlargeCenterPage: true,
-            enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-            enlargeFactor: 0.4,
-            autoPlayInterval: const Duration(seconds: 10),
-            height: height,
-            scrollDirection: Axis.vertical,
-            autoPlay: true,
-            // enlargeCenterPage: true,
-          ),
-          itemBuilder: (context, index, realIdx) {
-            return Card(
-              text: textList[index],
-            );
-          },
-        );
-      }),
-    ));
-  }
-}
 
-class Card extends StatelessWidget {
-  final String text;
-  const Card({super.key, required this.text});
+// import 'package:flame/game.dart';
+// import 'package:flame_splash_screen/flame_splash_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_application_1/tapxa.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.all(50),
-        padding: const EdgeInsets.all(10),
-        // color: Colors.black,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 1,
-              spreadRadius: 1,
-            ),
-          ],
-        ),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
-    );
-  }
-}
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: const SplashScreenGame(),
+//       theme: ThemeData.dark(),
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }
+
+// class GameScreen extends StatelessWidget {
+//   const GameScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final game = Tapxa();
+//     return GameWidget(game: game);
+//   }
+// }
+
+// class SplashScreenGame extends StatefulWidget {
+//   const SplashScreenGame({super.key});
+
+//   @override
+//   createState() => _SplashScreenGameState();
+// }
+
+// class _SplashScreenGameState extends State<SplashScreenGame> {
+//   late FlameSplashController controller;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: FlameSplashScreen(
+//         showBefore: (BuildContext context) {
+//           return const Text('Before logo');
+//         },
+//         showAfter: (BuildContext context) {
+//           return const Text('After logo');
+//         },
+//         theme: FlameSplashTheme.dark,
+//         onFinish: (context) => Navigator.pushReplacement<void, void>(
+//           context,
+//           MaterialPageRoute(builder: (context) => const GameScreen()),
+//         ),
+//       ),
+//     );
+//   }
+// }
