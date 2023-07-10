@@ -4,7 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
 class Tapxa extends FlameGame with HasCollisionDetection {
   @override
@@ -180,6 +180,7 @@ class Trail extends Component {
 
 class Star extends PositionComponent with DragCallbacks, CollisionCallbacks {
   final int n;
+  late ShapeHitbox hitbox;
 
   Star({
     required this.n,
@@ -212,6 +213,17 @@ class Star extends PositionComponent with DragCallbacks, CollisionCallbacks {
   @override
   bool containsLocalPoint(Vector2 point) {
     return _path.contains(point.toOffset());
+  }
+
+  @override
+  Future<void> onLoad() async {
+    final defaultPaint = Paint()
+      ..color = Colors.cyan
+      ..style = PaintingStyle.stroke;
+    hitbox = RectangleHitbox(size: Vector2(100, 100))
+      ..paint = defaultPaint
+      ..renderShape = true;
+    add(hitbox);
   }
 
   @override
@@ -253,13 +265,18 @@ class Star extends PositionComponent with DragCallbacks, CollisionCallbacks {
     position += event.delta;
   }
 
-  @override
-  void onMount() {
-    super.onMount();
-    final shape = CircleHitbox.relative(3,
-        parentSize: size, position: size / 2, anchor: Anchor.center);
-    add(shape);
-  }
+  // @override
+  // void onMount() {
+  //   super.onMount();
+  //   final defaultPaint = Paint()
+  //     ..color = Colors.red
+  //     ..style = PaintingStyle.stroke;
+  //   final shape = CircleHitbox.relative(3,
+  //       parentSize: size, position: size / 2, anchor: Anchor.center)
+  //     ..paint = defaultPaint
+  //     ..renderShape = true;
+  //   add(shape);
+  // }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
