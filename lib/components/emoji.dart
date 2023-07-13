@@ -10,18 +10,8 @@ final assets = [
 ];
 
 class Emoji extends PositionComponent {
-  final double cellSize;
   final int value;
-  @override
-  final double x;
-  @override
-  final double y;
-  Emoji({
-    required this.value,
-    required this.cellSize,
-    required this.x,
-    required this.y,
-  });
+  Emoji({required this.value, super.size, super.position});
   // @override
   // Future<void> onLoad() async {
   //   // final gameOverText =
@@ -40,8 +30,8 @@ class Emoji extends PositionComponent {
     add(
       LottieComponent(animation,
           repeating: true, // Continuously loop the animation.
-          size: Vector2.all(cellSize),
-          position: Vector2(x, y)),
+          size: size,
+          position: Vector2(0, 0)),
     );
   }
 }

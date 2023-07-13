@@ -1,33 +1,39 @@
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
-import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
 
-class Stage extends PositionComponent with DragCallbacks {
-  final _rectPaint = Paint()..color = const Color(0x88AC54BF);
 
-  // Stage({required int value, required double x, required double y})
-  //     : _value = _cell[value],
-  //       _x = x,
-  //       _y = y;
-  // @override
-  // Future<void> onLoad() async {
-  //   // final gameOverText =
-  //   //     GameOverText(spriteImage); // GameOverText is a Component
-  //   // final gameOverButton =
-  //   //     GameOverButton(spriteImage); // GameOverRestart is a SpriteComponent
-
-  //   // add(gameOverText);
-  //   // add(gameOverButton);
-  // }
-
+// import 'cell.dart';
+const maps = [
+  [
+    [
+      0,0,0,0,0
+    ],
+    [
+      1,1,1,1,1
+    ],
+    [
+      1,1,1,1,1
+    ],
+    [0,0,0,0,0]
+  ],
+];
+class Stage extends PositionComponent with HasCollisionDetection {
+  final cellSize = NotifyingVector2(100, 100);
+  final int level;
+  Stage({required this.level})
   @override
-  void render(Canvas canvas) {
-    // var x = const RRect.fromLTRBXY(0, 0, 100, 100, 10, 10);
-    // var y = Paint()
-    //   ..color = const Color(0x5CEF971B)
-    //   ..style = PaintingStyle.stroke
-    //   ..strokeWidth = 35;
-    canvas.drawRect(size.toRect(), _rectPaint);
+  onLoad() {
+    
+    //  Cell(value: 0, position: NotifyingVector2(0, 0), size: cellSize),
+    //   Cell(value: 1, position: NotifyingVector2(100, 0), size: cellSize),
+    //   Cell(value: 2, position: NotifyingVector2(200, 0), size: cellSize),
+    //   Cell(value: 3, position: NotifyingVector2(0, 100), size: cellSize),
+    //   Cell(value: 4, position: NotifyingVector2(100, 100), size: cellSize),
+    //   Cell(value: 0, position: NotifyingVector2(0, 200), size: cellSize),
+    //   Cell(value: 1, position: NotifyingVector2(100, 200), size: cellSize),
+    //   Cell(value: 2, position: NotifyingVector2(200, 200), size: cellSize),
+    //   Cell(value: 3, position: NotifyingVector2(0, 300), size: cellSize),
+    //   Cell(value: 4, position: NotifyingVector2(100, 300), size: cellSize),
   }
 
   @override

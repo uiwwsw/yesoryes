@@ -1,22 +1,20 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'emoji.dart';
 
 class Cell extends PositionComponent {
-  late ShapeHitbox hitbox;
-  final double cellSize;
+  late final ShapeHitbox hitbox;
   final int value;
   @override
-  final double x;
+  final NotifyingVector2 position;
   @override
-  final double y;
-  Cell(
-      {required this.value,
-      required this.x,
-      required this.y,
-      required this.cellSize});
+  final NotifyingVector2 size;
+  Cell({required this.value, required this.position, required this.size});
+  // Cell({required this.value, required this.position, required this.size});
+
   // @override
   // Future<void> onLoad() async {
   //   // final gameOverText =
@@ -29,12 +27,11 @@ class Cell extends PositionComponent {
   // }
   @override
   Future<void> onLoad() async {
-    add(Emoji(cellSize: cellSize, value: value, x: x, y: y));
+    add(Emoji(value: value, size: size, position: position));
     final defaultPaint = Paint()
       ..color = Colors.cyan
       ..style = PaintingStyle.stroke;
-    hitbox = RectangleHitbox(
-        position: Vector2(x, y), size: Vector2(cellSize, cellSize))
+    hitbox = RectangleHitbox(position: position, size: size)
       ..paint = defaultPaint
       ..renderShape = true;
     add(hitbox);
