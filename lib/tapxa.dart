@@ -5,44 +5,56 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/cell.dart';
 
 class Tapxa extends FlameGame with HasCollisionDetection {
+  final double cellSize = 100.0;
   @override
   Future<void> onLoad() async {
     addAll([
-      DragTarget(),
-      Star(
-        n: 5,
-        radius1: 40,
-        radius2: 20,
-        sharpness: 0.2,
-        color: const Color(0xffbae5ad),
-        position: Vector2(70, 70),
-      ),
-      Star(
-        n: 3,
-        radius1: 50,
-        radius2: 40,
-        sharpness: 0.3,
-        color: const Color(0xff6ecbe5),
-        position: Vector2(70, 160),
-      ),
-      Star(
-        n: 12,
-        radius1: 10,
-        radius2: 75,
-        sharpness: 1.3,
-        color: const Color(0xfff6df6a),
-        position: Vector2(70, 270),
-      ),
-      Star(
-        n: 10,
-        radius1: 20,
-        radius2: 17,
-        sharpness: 0.85,
-        color: const Color(0xfff82a4b),
-        position: Vector2(110, 110),
-      ),
+      // DragTarget(),
+      // Star(
+      //   n: 5,
+      //   radius1: 40,
+      //   radius2: 20,
+      //   sharpness: 0.2,
+      //   color: const Color(0xffbae5ad),
+      //   position: Vector2(70, 70),
+      // ),
+      // Star(
+      //   n: 3,
+      //   radius1: 50,
+      //   radius2: 40,
+      //   sharpness: 0.3,
+      //   color: const Color(0xff6ecbe5),
+      //   position: Vector2(70, 160),
+      // ),
+      // Star(
+      //   n: 12,
+      //   radius1: 10,
+      //   radius2: 75,
+      //   sharpness: 1.3,
+      //   color: const Color(0xfff6df6a),
+      //   position: Vector2(70, 270),
+      // ),
+      // Star(
+      //   n: 10,
+      //   radius1: 20,
+      //   radius2: 17,
+      //   sharpness: 0.85,
+      //   color: const Color(0xfff82a4b),
+      //   position: Vector2(110, 110),
+      // ),
+      Cell(value: 0, x: 0, y: 0, cellSize: cellSize),
+      Cell(value: 1, x: 100, y: 0, cellSize: cellSize),
+      Cell(value: 2, x: 200, y: 0, cellSize: cellSize),
+      Cell(value: 3, x: 0, y: 100, cellSize: cellSize),
+      Cell(value: 4, x: 100, y: 100, cellSize: cellSize),
+      Cell(value: 0, x: 0, y: 200, cellSize: cellSize),
+      Cell(value: 1, x: 100, y: 200, cellSize: cellSize),
+      Cell(value: 2, x: 200, y: 200, cellSize: cellSize),
+      Cell(value: 3, x: 0, y: 300, cellSize: cellSize),
+      Cell(value: 4, x: 100, y: 300, cellSize: cellSize),
     ]);
   }
 }
@@ -190,14 +202,14 @@ class Star extends PositionComponent with DragCallbacks, CollisionCallbacks {
     required this.color,
     super.position,
   }) {
-    _path = Path()..moveTo(radius1, 0);
-    for (var i = 0; i < n; i++) {
-      final p1 = Vector2(radius2, 0)..rotate(tau / n * (i + sharpness));
-      final p2 = Vector2(radius2, 0)..rotate(tau / n * (i + 1 - sharpness));
-      final p3 = Vector2(radius1, 0)..rotate(tau / n * (i + 1));
-      _path.cubicTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-    }
-    _path.close();
+    // _path = Path()..moveTo(radius1, 0);
+    // for (var i = 0; i < n; i++) {
+    //   final p1 = Vector2(radius2, 0)..rotate(tau / n * (i + sharpness));
+    //   final p2 = Vector2(radius2, 0)..rotate(tau / n * (i + 1 - sharpness));
+    //   final p3 = Vector2(radius1, 0)..rotate(tau / n * (i + 1));
+    //   _path.cubicTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+    // }
+    // _path.close();
   }
   final Color color;
   final Paint _paint = Paint();
@@ -228,15 +240,23 @@ class Star extends PositionComponent with DragCallbacks, CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    if (isDragged) {
-      _paint.color = color.withOpacity(0.5);
-      canvas.drawPath(_path, _paint);
-      canvas.drawPath(_path, _borderPaint);
-    } else {
-      _paint.color = color.withOpacity(1);
-      canvas.drawPath(_path, _shadowPaint);
-      canvas.drawPath(_path, _paint);
-    }
+    var textPaint = TextPaint(
+      style: const TextStyle(
+          fontSize: 100.0,
+          fontFamily: 'Awesome Font',
+          color: Color.fromARGB(255, 255, 255, 255)),
+    );
+    textPaint.render(canvas, '_value', Vector2(0, 0));
+
+    // if (isDragged) {
+    //   _paint.color = color.withOpacity(0.5);
+    //   canvas.drawPath(_path, _paint);
+    //   canvas.drawPath(_path, _borderPaint);
+    // } else {
+    //   _paint.color = color.withOpacity(1);
+    //   canvas.drawPath(_path, _shadowPaint);
+    //   canvas.drawPath(_path, _paint);
+    // }
   }
 
   @override

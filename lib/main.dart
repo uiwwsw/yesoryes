@@ -3,6 +3,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/tapxa.dart';
 
 void main() {
+  // Flame.images.load('assets/images/1.webp');
+
+  // await Future.wait([
+  //   Flame.images.load('1.webp'),
+  //   Flame.images.load('2.webp'),
+  //   Flame.images.load('3.webp'),
+  //   Flame.images.load('4.webp'),
+  //   Flame.images.load('5.webp'),
+  // ]);
+
   final game = Tapxa();
   runApp(GameWidget(game: game));
 }

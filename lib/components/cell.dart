@@ -1,22 +1,22 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-var textPaint = TextPaint(
-  style: const TextStyle(
-      fontSize: 100.0,
-      fontFamily: 'Awesome Font',
-      color: Color.fromARGB(255, 255, 255, 255)),
-);
+import 'emoji.dart';
 
 class Cell extends PositionComponent {
-  final String _value;
-  final double _x;
-  final double _y;
-  static final List<String> _cell = ['😀', '🤣', '🥰', '🤩', '😜', '🤭'];
-  Cell({required int value, required double x, required double y})
-      : _value = _cell[value],
-        _x = x,
-        _y = y;
+  late ShapeHitbox hitbox;
+  final double cellSize;
+  final int value;
+  @override
+  final double x;
+  @override
+  final double y;
+  Cell(
+      {required this.value,
+      required this.x,
+      required this.y,
+      required this.cellSize});
   // @override
   // Future<void> onLoad() async {
   //   // final gameOverText =
@@ -27,9 +27,16 @@ class Cell extends PositionComponent {
   //   // add(gameOverText);
   //   // add(gameOverButton);
   // }
-
   @override
-  void render(Canvas canvas) {
-    textPaint.render(canvas, _value, Vector2(_x, _y));
+  Future<void> onLoad() async {
+    add(Emoji(cellSize: cellSize, value: value, x: x, y: y));
+    final defaultPaint = Paint()
+      ..color = Colors.cyan
+      ..style = PaintingStyle.stroke;
+    hitbox = RectangleHitbox(
+        position: Vector2(x, y), size: Vector2(cellSize, cellSize))
+      ..paint = defaultPaint
+      ..renderShape = true;
+    add(hitbox);
   }
 }
