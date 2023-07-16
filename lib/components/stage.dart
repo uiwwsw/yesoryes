@@ -15,24 +15,18 @@ const maps = [
 class Stage extends PositionComponent with HasCollisionDetection {
   final cellSize = NotifyingVector2(100, 100);
   final int level;
-  int state = 0;
-  Stage({required this.level}) {
-    Future.delayed(const Duration(seconds: 5), () {
-      state += 1;
-      print(state);
-    });
-  }
+  Stage({required this.level});
 
   @override
   void onMount() {
     super.onMount();
-    if (state == 0) {
+    if (level == 0) {
       add(
         Cell(value: 0, position: NotifyingVector2(0, 0), size: cellSize),
       );
     } else {
       add(
-        Cell(value: 1, position: NotifyingVector2(100, 0), size: cellSize),
+        Cell(value: 2, position: NotifyingVector2(300, 0), size: cellSize),
       );
     }
   }

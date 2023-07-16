@@ -1,82 +1,85 @@
-import 'package:flame/game.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/tapxa.dart';
-
-void main() {
-  // Flame.images.load('assets/images/1.webp');
-
-  // await Future.wait([
-  //   Flame.images.load('1.webp'),
-  //   Flame.images.load('2.webp'),
-  //   Flame.images.load('3.webp'),
-  //   Flame.images.load('4.webp'),
-  //   Flame.images.load('5.webp'),
-  // ]);
-
-  final game = Tapxa();
-  runApp(GameWidget(game: game));
-}
-
-
-
 // import 'package:flame/game.dart';
-// import 'package:flame_splash_screen/flame_splash_screen.dart';
-// import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
 // import 'package:flutter_application_1/tapxa.dart';
 
 // void main() {
-//   runApp(const MyApp());
+//   // Flame.images.load('assets/images/1.webp');
+
+//   // await Future.wait([
+//   //   Flame.images.load('1.webp'),
+//   //   Flame.images.load('2.webp'),
+//   //   Flame.images.load('3.webp'),
+//   //   Flame.images.load('4.webp'),
+//   //   Flame.images.load('5.webp'),
+//   // ]);
+
+//   final game = Tapxa();
+//   runApp(GameWidget(game: game));
 // }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+import 'package:flame/game.dart';
+import 'package:flame_splash_screen/flame_splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/tapxa.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: const SplashScreenGame(),
-//       theme: ThemeData.dark(),
-//       debugShowCheckedModeBanner: false,
-//     );
-//   }
-// }
+void main() {
+  runApp(const MyApp());
+}
 
-// class GameScreen extends StatelessWidget {
-//   const GameScreen({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final game = Tapxa();
-//     return GameWidget(game: game);
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: const SplashScreenGame(),
+      theme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 
-// class SplashScreenGame extends StatefulWidget {
-//   const SplashScreenGame({super.key});
+class GameScreen extends StatelessWidget {
+  int level;
+  GameScreen({super.key, required this.level});
 
-//   @override
-//   createState() => _SplashScreenGameState();
-// }
+  @override
+  Widget build(BuildContext context) {
+    final game = Tapxa(level: level);
+    return GameWidget(game: game);
+  }
+}
 
-// class _SplashScreenGameState extends State<SplashScreenGame> {
-//   late FlameSplashController controller;
+class SplashScreenGame extends StatefulWidget {
+  const SplashScreenGame({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: FlameSplashScreen(
-//         showBefore: (BuildContext context) {
-//           return const Text('Before logo');
-//         },
-//         showAfter: (BuildContext context) {
-//           return const Text('After logo');
-//         },
-//         theme: FlameSplashTheme.dark,
-//         onFinish: (context) => Navigator.pushReplacement<void, void>(
-//           context,
-//           MaterialPageRoute(builder: (context) => const GameScreen()),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  createState() => _SplashScreenGameState();
+}
+
+class _SplashScreenGameState extends State<SplashScreenGame> {
+  int level = 0;
+  late FlameSplashController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    setState(() {
+      level = 1;
+    });
+    return Scaffold(
+      body: FlameSplashScreen(
+        showBefore: (BuildContext context) {
+          return const Text('Before logo');
+        },
+        showAfter: (BuildContext context) {
+          return const Text('After logo');
+        },
+        theme: FlameSplashTheme.dark,
+        onFinish: (context) => Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute(builder: (context) => GameScreen(level: level)),
+        ),
+      ),
+    );
+  }
+}

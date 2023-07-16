@@ -2,10 +2,13 @@ import 'package:flame/game.dart';
 import 'package:flutter_application_1/components/stage.dart';
 
 class Tapxa extends FlameGame {
+  int level;
   final double cellSize = 100.0;
+  Tapxa({required this.level});
+
   @override
   Future<void> onLoad() async {
-    addAll([Stage(level: 0)]);
+    addAll([Stage(level: level)]);
   }
 }
 
