@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
 }
 
 class GameScreen extends StatelessWidget {
-  int level;
-  GameScreen({super.key, required this.level});
+  final int level;
+  const GameScreen({super.key, required this.level});
 
   @override
   Widget build(BuildContext context) {
