@@ -3,8 +3,9 @@ import 'package:flutter_application_1/components/stage.dart';
 
 class Tapxa extends FlameGame {
   int level;
+  final Function levelUp;
   final double cellSize = 100.0;
-  Tapxa({required this.level});
+  Tapxa({required this.level, required this.levelUp});
 
   @override
   Future<void> onLoad() async {

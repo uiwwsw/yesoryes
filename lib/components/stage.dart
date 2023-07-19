@@ -3,19 +3,24 @@ import 'package:flame/game.dart';
 
 import 'cell.dart';
 
-const maps = [
-  [
-    [0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0]
-  ],
-];
-
 class Stage extends PositionComponent with HasCollisionDetection {
   final cellSize = NotifyingVector2(100, 100);
   final int level;
-  Stage({required this.level});
+  final List<Cell> maps = [];
+  static final _maps = [
+    [
+      [0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0]
+    ],
+  ];
+  Stage({required this.level}) {
+    print('djwkladjalw');
+    for (var map in _maps) {
+      // maps.addAll(map.map((e) => null))
+    }
+  }
 
   @override
   void onMount() {
