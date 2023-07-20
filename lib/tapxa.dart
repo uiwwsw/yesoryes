@@ -9,7 +9,7 @@ class Tapxa extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    addAll([Stage(level: level)]);
+    addAll([Stage()]);
   }
 }
 

@@ -5,34 +5,42 @@ import 'cell.dart';
 
 class Stage extends PositionComponent with HasCollisionDetection {
   final cellSize = NotifyingVector2(100, 100);
-  final int level;
-  final List<Cell> maps = [];
-  static final _maps = [
+  int level = 0;
+  // List<List<Cell>> map;
+  static final mapsArr = [
     [
       [0, 0, 0, 0, 0],
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
       [0, 0, 0, 0, 0]
-    ],
+    ].asMap(),
   ];
-  Stage({required this.level}) {
-    print('djwkladjalw');
-    for (var map in _maps) {
-      // maps.addAll(map.map((e) => null))
-    }
-  }
+  // Stage.fromLevel({required level}) : map = mapsArr[level].map((row) => row.map((cell) => Cell));
+  get map => Stage.mapsArr[level].entries.map((rowEntry) => rowEntry.value
+      .asMap()
+      .entries
+      .map(
+        (cellEntry) => Cell(
+            value: cellEntry.value,
+            position: NotifyingVector2(cellEntry.key * 100, rowEntry.key * 100),
+            size: cellSize),
+      )
+      .toList()
+      .toList());
+
+  // Stage.fromLevel({required this.level, required this.maps}) {
+
+  // }
 
   @override
   void onMount() {
     super.onMount();
-    if (level == 0) {
-      add(
-        Cell(value: 0, position: NotifyingVector2(0, 0), size: cellSize),
-      );
-    } else {
-      add(
-        Cell(value: 2, position: NotifyingVector2(300, 0), size: cellSize),
-      );
+    // map
+    // addAll(map);
+    print(map);
+    for (var row in map) {
+      print(row);
+      addAll(row);
     }
   }
 
