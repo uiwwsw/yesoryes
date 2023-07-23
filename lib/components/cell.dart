@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -16,6 +14,7 @@ final assets = [
 
 class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
   late final ShapeHitbox hitbox;
+  late Vector2 _position;
   final int value;
   Cell({required this.value, super.size, super.position}) : super();
   // Cell({required this.value, required this.position, required this.size});
@@ -59,19 +58,21 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
   void onDragUpdate(DragUpdateEvent event) {
     super.onDragUpdate(event);
     if (event.delta.x.abs() > event.delta.y.abs()) {
-      int plusMinus = event.delta.x > 0 ? 1 : -1;
-      print(super.position);
-      double amount = 0;
-      if (plusMinus == 1) {
-        amount = max(event.delta.x, event.localPosition.x + 100);
-      } else {
-        amount = min(event.delta.x, event.localPosition.x - 100);
+      if (event.delta.x > 0) {
+        print('오른쪽');
+        position = Vector2(_position.x + 100, _position.y);
+      } else if (event.delta.x < 0) {
+        print('왼쪽');
+        position = Vector2(_position.x - 100, _position.y);
       }
-      position += Vector2(amount, 0);
-    } else {
-      //   int plusMinus = event.delta.y > 0 ? 1 : -1;
-      //   double amount = max(event.delta.y.abs(), 100);
-      //   position += Vector2(0, plusMinus * amount);
+    } else if (event.delta.x.abs() < event.delta.y.abs()) {
+      if (event.delta.y > 0) {
+        print('위');
+        position = Vector2(_position.x, _position.y + 100);
+      } else if (event.delta.y < 0) {
+        print('아래');
+        position = Vector2(_position.x, _position.y - 100);
+      }
     }
     // priority = 10;
     // position += event.delta;
@@ -87,6 +88,7 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
   @override
   void onDragStart(DragStartEvent event) {
     super.onDragStart(event);
+    _position = Vector2(position.x, position.y);
     priority = 10;
   }
 }
