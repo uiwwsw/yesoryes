@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame_lottie/flame_lottie.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ final assets = [
 ];
 
 class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
+  // EffectController effectController = EffectController();
   late final ShapeHitbox hitbox;
   late Vector2 _position;
   final int value;
@@ -54,24 +56,54 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
     add(hitbox);
   }
 
+  move(String direction) async {
+    int horizon = 0;
+    int vertical = 0;
+    switch (direction) {
+      case '오른쪽':
+        horizon = 100;
+        break;
+      case '왼쪽':
+        horizon = -100;
+        break;
+      case '아래쪽':
+        vertical = 100;
+        break;
+      case '위쪽':
+        vertical = -100;
+        break;
+    }
+    final effect = MoveEffect.to(
+        Vector2(_position.x + horizon, _position.y + vertical),
+        EffectController(duration: 3));
+    final asset = assets[value];
+    final animation = await loadLottie(asset);
+    effect.add(
+      LottieComponent(
+        animation,
+        repeating: true, // Continuously loop the animation.
+        size: size,
+      ),
+    );
+    // position += Vector2(x, y);
+    // effect();
+    // position = Vector2(_position.x + horizon, _position.y + vertical);
+  }
+
   @override
-  void onDragUpdate(DragUpdateEvent event) {
-    super.onDragUpdate(event);
+  void onDragUpdate(DragUpdateEvent event) async {
+    // super.onDragUpdate(event);
     if (event.delta.x.abs() > event.delta.y.abs()) {
       if (event.delta.x > 0) {
-        print('오른쪽');
-        position = Vector2(_position.x + 100, _position.y);
+        move('오른쪽');
       } else if (event.delta.x < 0) {
-        print('왼쪽');
-        position = Vector2(_position.x - 100, _position.y);
+        move('왼쪽');
       }
     } else if (event.delta.x.abs() < event.delta.y.abs()) {
       if (event.delta.y > 0) {
-        print('위');
-        position = Vector2(_position.x, _position.y + 100);
+        move('아래쪽');
       } else if (event.delta.y < 0) {
-        print('아래');
-        position = Vector2(_position.x, _position.y - 100);
+        move('위쪽');
       }
     }
     // priority = 10;
