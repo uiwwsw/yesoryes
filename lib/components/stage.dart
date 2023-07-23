@@ -1,11 +1,13 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_application_1/tapxa.dart';
 
 import 'cell.dart';
 
-class Stage extends PositionComponent with HasCollisionDetection {
+class Stage extends PositionComponent with HasGameRef<Tapxa> {
   final cellSize = NotifyingVector2(100, 100);
-  int level = 0;
+  Stage() : super();
+  final int level = 0;
   // List<List<Cell>> map;
   static final mapsArr = [
     [
@@ -14,8 +16,13 @@ class Stage extends PositionComponent with HasCollisionDetection {
       [1, 1, 1, 1, 1],
       [0, 0, 0, 0, 0]
     ].asMap(),
+    [
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+    ].asMap(),
   ];
-  // Stage.fromLevel({required level}) : map = mapsArr[level].map((row) => row.map((cell) => Cell));
   get map => Stage.mapsArr[level].entries.map((rowEntry) => rowEntry.value
       .asMap()
       .entries
@@ -35,36 +42,22 @@ class Stage extends PositionComponent with HasCollisionDetection {
   @override
   void onMount() {
     super.onMount();
-    // map
-    // addAll(map);
-    print(map);
+
     for (var row in map) {
-      print(row);
       addAll(row);
     }
   }
 
-  // @override
-  // onLoad() {
-  //   if (state == 0) {
-  //     add(
-  //       Cell(value: 0, position: NotifyingVector2(0, 0), size: cellSize),
-  //     );
-  //   } else {
-  //     add(
-  //       Cell(value: 1, position: NotifyingVector2(100, 0), size: cellSize),
-  //     );
-  //   }
-  //  Cell(value: 0, position: NotifyingVector2(0, 0), size: cellSize),
-  //   Cell(value: 2, position: NotifyingVector2(200, 0), size: cellSize),
-  //   Cell(value: 3, position: NotifyingVector2(0, 100), size: cellSize),
-  //   Cell(value: 4, position: NotifyingVector2(100, 100), size: cellSize),
-  //   Cell(value: 0, position: NotifyingVector2(0, 200), size: cellSize),
-  //   Cell(value: 1, position: NotifyingVector2(100, 200), size: cellSize),
-  //   Cell(value: 2, position: NotifyingVector2(200, 200), size: cellSize),
-  //   Cell(value: 3, position: NotifyingVector2(0, 300), size: cellSize),
-  //   Cell(value: 4, position: NotifyingVector2(100, 300), size: cellSize),
-  // }
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    // registerExtension();
+    // fromLevel();
+    // componentss
+    // components
+    // componentsAtPoint(Tapxa)
+    // components.register<Tapxa>();
+  }
 
   @override
   void onGameResize(Vector2 size) {

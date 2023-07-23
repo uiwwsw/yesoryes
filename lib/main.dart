@@ -40,14 +40,11 @@ class MyApp extends StatelessWidget {
 }
 
 class GameScreen extends StatelessWidget {
-  final int level;
-  final Function levelUp;
-  const GameScreen({super.key, required this.level, required this.levelUp});
+  const GameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final game = Tapxa(level: level, levelUp: levelUp);
-    return GameWidget(game: game);
+    return GameWidget(game: Tapxa());
   }
 }
 
@@ -64,7 +61,6 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
 
   void levelUp() {
     setState(() => level += 1);
-    print(level);
   }
 
   @override
@@ -80,8 +76,7 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
         theme: FlameSplashTheme.dark,
         onFinish: (context) => Navigator.pushReplacement<void, void>(
           context,
-          MaterialPageRoute(
-              builder: (context) => GameScreen(level: level, levelUp: levelUp)),
+          MaterialPageRoute(builder: (context) => const GameScreen()),
         ),
       ),
     );
