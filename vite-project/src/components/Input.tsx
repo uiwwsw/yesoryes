@@ -1,6 +1,7 @@
 import {  InputHTMLAttributes, forwardRef, useEffect, useImperativeHandle, useRef } from "react"
 import useClassname from "#/useClassname";
 import Times from "@/Times";
+import { ChangeEvent } from "react";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
@@ -22,6 +23,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({value = '',type = "text
     }
     const handleClickAtClearBtn = () => {
       setValue('')
+      props.onChange && props.onChange({target: innerRef.current!} as ChangeEvent<HTMLInputElement>)
     }
   return (
     <>
