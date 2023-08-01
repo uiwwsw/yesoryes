@@ -33,7 +33,7 @@ function App() {
       <Button className="bg-white">버튼2</Button>
       <Button className="bg-white">버튼3</Button>
       <Button className="bg-white">버튼4</Button>
-      <Input errorMessage='dawdaw' value="dawdaw" required onBlur={() => {console.log('dawdawd')}} onChange={debouncedChange} />
+      <Input errorMessage='dawdaw' value="dawdaw" required onBlur={() => {console.log('dawdawd')}} onChange={debouncedChange} ref={inputRef} />
       <Input onBlur={() => {console.log('dawdawd')}}/>
     </>
   )
