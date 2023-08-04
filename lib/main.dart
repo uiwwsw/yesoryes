@@ -67,12 +67,12 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlameSplashScreen(
-        showBefore: (BuildContext context) {
-          return const Text('Before logo');
-        },
-        showAfter: (BuildContext context) {
-          return const Text('After logo');
-        },
+        // showBefore: (BuildContext context) {
+        //   return const Text('Before logo');
+        // },
+        // showAfter: (BuildContext context) {
+        //   return const Text('After logo');
+        // },
         theme: FlameSplashTheme.dark,
         onFinish: (context) => Navigator.pushReplacement<void, void>(
           context,

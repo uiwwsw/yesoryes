@@ -4,6 +4,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame_lottie/flame_lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/tapxa.dart';
 
 final assets = [
   Lottie.asset('assets/lottie/1.json'),
@@ -13,14 +14,14 @@ final assets = [
   Lottie.asset('assets/lottie/5.json'),
 ];
 
-class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
+class Cell extends PositionComponent
+    with DragCallbacks, CollisionCallbacks, HasGameRef<Tapxa> {
   // EffectController effectController = EffectController();
   late final ShapeHitbox hitbox;
   late Vector2 _position;
   final int value;
-  dynamic ddd;
+  late LottieComponent Component;
   String direction = '';
-  bool moving = false;
   Cell({required this.value, super.size, super.position}) : super();
   // Cell({required this.value, required this.position, required this.size});
 
@@ -46,19 +47,12 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
     // final effect = MoveEffect.by(
     //     Vector2(position.x + 100, position.y + 100),
     //     EffectController(duration: 3));
-    ddd = LottieComponent(
-        animation,
-        repeating: true, // Continuously loop the animation.
-        size: size,
-      );
-    add(
-      ddd
-      // ..add(effect),
+    Component = LottieComponent(
+      animation,
+      repeating: true, // Continuously loop the animation.
+      size: size,
     );
-
-
-
-
+    add(Component);
 
     final defaultPaint = Paint()
       ..color = Colors.cyan
@@ -86,19 +80,20 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
         vertical = -100;
         break;
     }
-    if (moving == false) {
-      print(_position);
-    final effect = MoveEffect.by(
-        Vector2(horizon, vertical),
-        EffectController(duration: 1),
+    if (gameRef.animation == 0) {
+      var target = Vector2(horizon, vertical);
+      final effect = MoveEffect.by(
+        target,
+        EffectController(duration: .3),
         onComplete: () {
-          moving = false;
-        },);
-    moving = true;
-      ddd.add(effect);
+          gameRef.animation = 2;
+        },
+      );
+      gameRef.animation = 1;
+      gameRef.target = _position + target;
+      Component.add(effect);
     }
-    await Future.delayed(Duration(seconds: 1));
-
+    await Future.delayed(const Duration(seconds: 300));
 
     // position += Vector2(x, y);
     // effect();
@@ -112,13 +107,13 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
       if (event.delta.x > 0) {
         await move('오른쪽');
       } else if (event.delta.x < 0) {
-       await move('왼쪽');
+        await move('왼쪽');
       }
     } else if (event.delta.x.abs() < event.delta.y.abs()) {
       if (event.delta.y > 0) {
-       await  move('아래쪽');
+        await move('아래쪽');
       } else if (event.delta.y < 0) {
-       await  move('위쪽');
+        await move('위쪽');
       }
     }
     // priority = 10;
@@ -138,5 +133,6 @@ class Cell extends PositionComponent with DragCallbacks, CollisionCallbacks {
     _position = Vector2(position.x, position.y);
     print(position);
     priority = 10;
+    gameRef.target = _position;
   }
 }

@@ -4,6 +4,9 @@ import 'package:flutter_application_1/components/stage.dart';
 class Tapxa extends FlameGame {
   final double cellSize = 100.0;
   int level = 0;
+  int animation = 0;
+  Vector2 origin = Vector2(0, 0);
+  Vector2 target = Vector2(0, 0);
   @override
   Future<void> onLoad() async {
     addAll([Stage()]);
