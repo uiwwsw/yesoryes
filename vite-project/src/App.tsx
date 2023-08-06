@@ -6,14 +6,12 @@ import Dialog from '@/Dialog';
 import Form from '@/Form';
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const onChange:ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.value)
+  const onChange = (e:string) => {
     console.log(e)
   }
   const handleClick = () => {
     inputRef.current && (inputRef.current.value ='ddawkd;lawkd')
   }
-  const debouncedChange = useDebounce<ChangeEvent<HTMLInputElement>>(onChange, 200);
   return (
     <>
       <Dialog button={<Button>팝업오픈</Button>}>
@@ -33,8 +31,7 @@ function App() {
       <Button className="bg-white">버튼2</Button>
       <Button className="bg-white">버튼3</Button>
       <Button className="bg-white">버튼4</Button>
-      <Input errorMessage='dawdaw' value="dawdaw" required onBlur={() => {console.log('dawdawd')}} onChange={debouncedChange} ref={inputRef} />
-      <Input onBlur={() => {console.log('dawdawd')}}/>
+      <Input errorMessage='dawdaw' value="dawdaw" required onBlur={() => {console.log('dawdawd')}} changed={onChange} ref={inputRef} />
     </>
   )
 }
