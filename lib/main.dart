@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/map.dart';
 import 'package:flutter_application_1/test.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await NaverMapSdk.instance.initialize(
+      clientId: 'd6n0qgp3um',
+      onAuthFailed: (error) {
+        print('Auth failed: $error');
+      });
+
   runApp(const MainApp());
 }
 
@@ -11,7 +21,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AppBarExample(),
+      home: FNMapPage(),
     );
   }
 }
